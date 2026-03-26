@@ -20,6 +20,10 @@ async function getUser(email: string): Promise<User | undefined> {
  
 export const { auth, signIn, signOut } = NextAuth({
   ...authConfig,
+  // Required for some production proxy setups (including Vercel edge/network layers).
+  trustHost: true,
+  // In production this must be set in environment variables.
+  secret: process.env.AUTH_SECRET,
   providers: [
     Credentials({
       async authorize(credentials) {
