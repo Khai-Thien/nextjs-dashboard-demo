@@ -6,6 +6,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { lusitana } from "@/app/ui/fonts";
 import { fetchCardData } from "@/app/lib/data";
+import { getMessages, type Locale } from "@/app/lib/i18n-lite";
 
 const iconMap = {
   collected: BanknotesIcon,
@@ -14,7 +15,12 @@ const iconMap = {
   invoices: InboxIcon,
 };
 
-export default async function CardWrapper() {
+export default async function CardWrapper({
+  locale = "en",
+}: {
+  locale?: Locale;
+}) {
+  const t = getMessages(locale);
   const {
     numberOfInvoices,
     numberOfCustomers,
@@ -26,11 +32,23 @@ export default async function CardWrapper() {
     <>
       {/* NOTE: Uncomment this code in Chapter 9 */}
 
-      <Card title="Collected" value={totalPaidInvoices} type="collected" />
-      <Card title="Pending" value={totalPendingInvoices} type="pending" />
-      <Card title="Total Invoices" value={numberOfInvoices} type="invoices" />
       <Card
-        title="Total Customers"
+        title={t.dashboard.collected}
+        value={totalPaidInvoices}
+        type="collected"
+      />
+      <Card
+        title={t.dashboard.pending}
+        value={totalPendingInvoices}
+        type="pending"
+      />
+      <Card
+        title={t.dashboard.totalInvoices}
+        value={numberOfInvoices}
+        type="invoices"
+      />
+      <Card
+        title={t.dashboard.totalCustomers}
         value={numberOfCustomers}
         type="customers"
       />
