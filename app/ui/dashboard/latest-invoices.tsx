@@ -3,13 +3,19 @@ import clsx from "clsx";
 import Image from "next/image";
 import { lusitana } from "@/app/ui/fonts";
 import { fetchLatestInvoices } from "@/app/lib/data";
+import { getMessages, type Locale } from "@/app/lib/i18n-lite";
 
-export default async function LatestInvoices() {
+export default async function LatestInvoices({
+  locale = "en",
+}: {
+  locale?: Locale;
+}) {
+  const t = getMessages(locale);
   const latestInvoices = await fetchLatestInvoices(); // Fetch data inside the component
   return (
     <div className="flex w-full flex-col md:col-span-4">
       <h2 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
-        Latest Invoices
+        {t.dashboard.latestInvoices}
       </h2>
       <div className="flex grow flex-col justify-between rounded-xl bg-gray-50 p-4">
         {/* NOTE: Uncomment this code in Chapter 7 */}
@@ -54,7 +60,9 @@ export default async function LatestInvoices() {
         </div>
         <div className="flex items-center pb-2 pt-6">
           <ArrowPathIcon className="h-5 w-5 text-gray-500" />
-          <h3 className="ml-2 text-sm text-gray-500 ">Updated just now</h3>
+          <h3 className="ml-2 text-sm text-gray-500 ">
+            {t.dashboard.updatedJustNow}
+          </h3>
         </div>
       </div>
     </div>

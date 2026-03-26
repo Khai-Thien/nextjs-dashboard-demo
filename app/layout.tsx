@@ -1,6 +1,7 @@
 import "@/app/ui/global.css";
 import { inter } from "@/app/ui/fonts";
 import { Metadata } from "next";
+import LanguageSwitcher from "@/app/ui/language-switcher";
 
 export const metadata: Metadata = {
   title: {
@@ -18,7 +19,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased`}>{children}</body>
+      <body className={`${inter.className} antialiased`}>
+        <div className="fixed right-3 top-3 z-50 md:right-4 md:top-4">
+          <LanguageSwitcher />
+        </div>
+        {children}
+      </body>
     </html>
   );
 }

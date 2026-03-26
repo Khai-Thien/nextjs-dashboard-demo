@@ -3,6 +3,7 @@ import { CalendarIcon } from "@heroicons/react/24/outline";
 import { lusitana } from "@/app/ui/fonts";
 import { Revenue } from "@/app/lib/definitions";
 import { fetchRevenue } from "@/app/lib/data";
+import { getMessages, type Locale } from "@/app/lib/i18n-lite";
 
 // This component is representational only.
 // For data visualization UI, check out:
@@ -10,7 +11,12 @@ import { fetchRevenue } from "@/app/lib/data";
 // https://www.chartjs.org/
 // https://airbnb.io/visx/
 
-export default async function RevenueChart() {
+export default async function RevenueChart({
+  locale = "en",
+}: {
+  locale?: Locale;
+}) {
+  const t = getMessages(locale);
   // Make component async, remove the props
   const revenue = await fetchRevenue(); // Fetch data inside the component
 
@@ -20,13 +26,13 @@ export default async function RevenueChart() {
   const { yAxisLabels, topLabel } = generateYAxis(revenue);
 
   if (!revenue || revenue.length === 0) {
-    return <p className="mt-4 text-gray-400">No data available.</p>;
+    return <p className="mt-4 text-gray-400">{t.dashboard.noData}</p>;
   }
 
   return (
     <div className="w-full md:col-span-4">
       <h2 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
-        Recent Revenue
+        {t.dashboard.recentRevenue}
       </h2>
       {/* NOTE: Uncomment this code in Chapter 7 */}
 
@@ -57,7 +63,9 @@ export default async function RevenueChart() {
         </div>
         <div className="flex items-center pb-2 pt-6">
           <CalendarIcon className="h-5 w-5 text-gray-500" />
-          <h3 className="ml-2 text-sm text-gray-500 ">Last 12 months</h3>
+          <h3 className="ml-2 text-sm text-gray-500 ">
+            {t.dashboard.last12Months}
+          </h3>
         </div>
       </div>
     </div>
